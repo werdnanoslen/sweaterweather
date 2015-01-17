@@ -14,6 +14,40 @@ angular.module('sweaterweather.controllers', [])
         appId: "54b9cdba1c94bc6a43000975"
     }, function(hull, me, app, org){
         console.log('Success, Hull is ready.');
+        $scope.submit = function() {
+            var credentials = {
+                login: $scope.username,
+                password: $scope.password
+            };
+            Hull.login(credentials).then(function (me) {
+                console.log("You're logged in as ", me.email);
+            }, function (error) {
+                console.log("Ooops, something went wrong", error.message);
+            });
+        };
+    }, function(error){
+        console.error(error);
+    });
+}])
+
+.controller('RegisterCtrl', ['$scope', '$http', function ($scope, $http) {
+    Hull.init({
+        orgUrl: "https://56f8c7dd.hullapp.io",
+        appId: "54b9cdba1c94bc6a43000975"
+    }, function(hull, me, app, org){
+        console.log('Success, Hull is ready.');
+        $scope.submit = function() {
+            var user = {
+                name: $scope.name,
+                email: $scope.email,
+                password: $scope.password
+            }
+            Hull.signup(user).then(function(user) {
+                console.log('Hello ' + user.name);
+            }, function(error) {
+                console.log(error.message);
+            });
+        };
     }, function(error){
         console.error(error);
     });

@@ -11,6 +11,10 @@ angular.module('sweaterweather', [
         templateUrl: 'partials/home.html',
         controller: 'HomeCtrl'
     }).
+    when('/vis', {
+        templateUrl: 'partials/vis.html',
+        controller: 'AppCtrl'
+    }).
     otherwise({
         redirectTo: '/home'
     });

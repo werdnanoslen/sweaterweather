@@ -15,8 +15,16 @@ angular.module('sweaterweather', [
         templateUrl: 'partials/login.html',
         controller: 'LoginCtrl'
     }).
-    when('/register/client', {
+    when('/register/client/basic', {
         templateUrl: 'partials/register/client/basic.html',
+        controller: 'RegisterCtrl'
+    }).
+    when('/register/client/3rd_party', {
+        templateUrl: 'partials/register/client/3rd_party.html',
+        controller: 'RegisterCtrl'
+    }).
+    when('/register/client/confirmation', {
+        templateUrl: 'partials/register/client/confirmation.html',
         controller: 'RegisterCtrl'
     }).
     when('/vis', {

@@ -1,0 +1,49 @@
+<h4 class="ui inverted black block header">sweaterweather</span></h4>
+
+<div class="ui top attached tabular menu">
+    <tab-item id="'tab1'" text="'Tab 1'" active="true"></tab-item>
+    <tab-item id="'tab2'" text="'Tab 2'"></tab-item>
+</div>
+
+<div class="ui bottom attached tab active segment tab1">
+    <div class="ui grid">
+        <div class="ui form sixteen wide column ng-class: {loading: isLoading}">
+            <h4 class="ui block top attached header">Insert Contact</h4>
+            <div class="ui bottom attached secondary segment">
+                <div class="field">
+                    <label>Name:</label>
+                    <input type="text" ng-model="name">
+                </div>
+                <div class="field">
+                    <label>Site:</label>
+                    <input type="text" ng-model="site">
+                </div>
+                <div class="field">
+                    <button class="ui button large primary" ng-click="insert()">Insert</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <table class="ui celled striped large table segment">
+        <thead>
+            <tr>
+                <th colspan="2">Contacts</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="person in contacts track by person.name">
+                <td>{{person.name}}</td>
+                <td class="collapsing right aligned">
+                    <a href="http://{{person.site}}">
+                        {{person.site}}
+                    </a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="ui bottom attached tab segment tab2">
+    <p>This is the tab 2 content</p>
+</div>

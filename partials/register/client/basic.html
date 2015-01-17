@@ -31,25 +31,27 @@
             </div>
         </div>
         <div class="ui sixteen wide column ng-class: {loading: isLoading}">
-            <h1 class="ui dividing header">Basic Info</h1>
-            <form class="ui two column grid form error">
+            <h1 class="ui dividing header">Basic Info
+                <div class="sub header">Let's get to know you.</div>
+            </h1>
+            <form class="ui two column grid form error" ng-submit="submit()">
                 <div class="column">
                     <div class="field">
                         <label>Name</label>
-                        <input type="text" name="name" placeholder="What's your name?">
+                        <input type="text" name="name" placeholder="What's your name?" ng-model="name">
                     </div>
-                    <div class="field error">
+                    <div class="field">
                         <label>Password</label>
-                        <input type="password" name="password" placeholder="Don't forget it!">
+                        <input type="password" name="password" placeholder="Don't forget it!" ng-model="password">
+
                     </div>
                     <div class="field">
                         <label>Email Address</label>
-                        <input type="email" name="address" placeholder="You'll be using this to login.">
+                        <input type="email" name="address" placeholder="You'll be using this to login." ng-model="email">
                     </div>
-                    <div class="ui hidden divider"></div>
-                    <div class="ui submit button">
+                    <button class="ui submit button" type="submit">
                         Register
-                    </div>
+                    </button>
                 </div>
                 <div class="column">
                     <img class="ui floated right image" src="http://placehold.it/400x200">

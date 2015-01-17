@@ -11,6 +11,10 @@ angular.module('sweaterweather', [
         templateUrl: 'partials/home.html',
         controller: 'HomeCtrl'
     }).
+    when('/login', {
+        templateUrl: 'partials/login.html',
+        controller: 'LoginCtrl'
+    }).
     when('/vis', {
         templateUrl: 'partials/vis.html',
         controller: 'AppCtrl'

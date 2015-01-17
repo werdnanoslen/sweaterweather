@@ -8,6 +8,17 @@ angular.module('sweaterweather.controllers', [])
     1000);
 }])
 
+.controller('LoginCtrl', ['$scope', '$http', function ($scope, $http) {
+    Hull.init({
+        orgUrl: "https://56f8c7dd.hullapp.io",
+        appId: "54b9cdba1c94bc6a43000975"
+    }, function(hull, me, app, org){
+        console.log('Success, Hull is ready.');
+    }, function(error){
+        console.error(error);
+    });
+}])
+
 .controller('AppCtrl', function AppCtrl($scope, $http) {
     // initialize the model
     $scope.user = 'angular';

@@ -77,6 +77,22 @@ angular.module('sweaterweather.controllers', [])
     $('#budget_bar').progress({
       percent: 76
     });
+
+    Trello.authorize({
+        success: function() {
+            var isLoggedIn = Trello.authorized();
+            Trello.members.get("me", function(member){
+                Trello.get("members/me/boards", function(cards) {
+                    $.each(cards, function(ix, card) {
+                        console.log(card.name);
+                    });
+                });
+            });
+        },
+        error: function(data) {
+            console.log('trello error: ', data);
+        }
+    });
 }])
 
 .controller('AppCtrl', function AppCtrl($scope, $http) {

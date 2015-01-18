@@ -21,15 +21,13 @@ angular.module('sweaterweather', [
     }).
     when('/register/client/3rd_party', {
         templateUrl: 'partials/register/client/3rd_party.html',
-        controller: 'RegisterCtrl'
+        controller: '3rdPartyCtrl'
     }).
     when('/register/client/confirmation', {
         templateUrl: 'partials/register/client/confirmation.html',
-        controller: 'RegisterCtrl'
     }).
     when('/dashboard', {
         templateUrl: 'partials/dashboard.html',
-        controller: 'RegisterCtrl'
     }).
     when('/vis', {
         templateUrl: 'partials/vis.html',

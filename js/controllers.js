@@ -81,10 +81,6 @@ angular.module('sweaterweather.controllers', [])
       percent: 76
     });
 
-    $('#demo_btn').on('click', function() {
-        $('.ui.large.modal').modal('show');
-    });
-
     $scope.getTrelloData = function () {
         Trello.authorize({
             success: function() {
@@ -186,7 +182,11 @@ angular.module('sweaterweather.controllers', [])
             textBottom.text("tasks completed")
             .style("font-size", "10px")
             .style("fill", "#838587");
+        })
+        .on("click", function(d) {
+            $('.ui.large.modal').modal('show');
         });
+        
 
         arcs.append("svg:path")
         .attr("fill", function(d, i) { return color[i]; } )

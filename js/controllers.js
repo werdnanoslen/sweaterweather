@@ -78,116 +78,221 @@ angular.module('sweaterweather.controllers', [])
       percent: 76
     });
 
-    Trello.authorize({
-        success: function() {
-            var isLoggedIn = Trello.authorized();
-            Trello.members.get("me", function(member){
-                Trello.get("members/me/boards", function(cards) {
-                    $.each(cards, function(ix, card) {
-                        console.log(card.name);
+    $scope.getTrelloData = function () {
+        Trello.authorize({
+            success: function() {
+                var isLoggedIn = Trello.authorized();
+                Trello.members.get("me", function(member){
+                    Trello.get("members/me/boards", function(cards) {
+                        $scope.data = cards;
+                        $scope.visualize1(cards);
+                        $scope.visualize2(cards);
+                        console.log($scope.data);
                     });
                 });
-            });
-        },
-        error: function(data) {
-            console.log('trello error: ', data);
-        }
-    });
-}])
-
-.controller('AppCtrl', function AppCtrl($scope, $http) {
-    // initialize the model
-    $scope.user = 'angular';
-    $scope.repo = 'angular.js';
-
-    // helper for formatting date
-    var humanReadableDate = function (d) {
-        return d.getUTCMonth()+1 + '/' + d.getUTCDate();
+            },
+            error: function(data) {
+                console.log('trello error: ', data);
+            }
+        });
     };
 
-    // helper for reformatting the Github API response into a form we can pass to D3
-    var reformatGithubResponse = function (data) {
-        // sort the data by author date (rather than commit date)
-        data.sort(function (a, b) {
-            if (new Date(a.commit.author.date) > new Date(b.commit.author.date)) {
-                return -1;
+    $scope.visualize1 = function(data) {
+        var dataset = {
+            tasks: [8, 3, 4, 5],
+        };
+
+        var width = 300,
+        height = 300,
+        radius = Math.min(width, height) / 2;
+
+        var color = ["#f64747","#f5ab35","#70ceef", "#fff"];
+
+        var pie = d3.layout.pie()
+        .sort(null);
+
+        var piedata = pie(dataset.tasks);
+
+        var arc = d3.svg.arc()
+        .innerRadius(radius - 100)
+        .outerRadius(radius - 70);
+
+        var svg = d3.select("#viz1")
+        .attr("width", width)
+        .attr("height", height)
+        .append("g")
+        .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+        var path = svg.selectAll("path")
+        .data(piedata)
+        .enter().append("path")
+        .attr("fill", function(d, i) { return color[i]; })
+        .attr("d", arc);
+
+        svg.selectAll("text").data(piedata)
+        .enter()
+        .append("text")
+        .attr("text-anchor", "middle")
+        .attr("x", function(d) {
+            var a = d.startAngle + (d.endAngle - d.startAngle)/2 - Math.PI/2;
+            d.cx = Math.cos(a) * (radius - 75);
+            return d.x = Math.cos(a) * (radius - 20);
+        })
+        .attr("y", function(d) {
+            var a = d.startAngle + (d.endAngle - d.startAngle)/2 - Math.PI/2;
+            d.cy = Math.sin(a) * (radius - 75);
+            return d.y = Math.sin(a) * (radius - 20);
+        });
+
+        svg.append("defs").append("marker")
+        .attr("id", "circ")
+        .attr("markerWidth", 6)
+        .attr("markerHeight", 6)
+        .attr("refX", 3)
+        .attr("refY", 3)
+        .append("circle")
+        .attr("cx", 3)
+        .attr("cy", 3)
+        .attr("r", 3);
+
+        svg.selectAll("path.pointer").data(piedata).enter()
+        .append("path")
+        .attr("class", "pointer")
+        .style("fill", "none")
+        .style("stroke", "black")
+        .attr("marker-end", "url(#circ)")
+        .attr("d", function(d) {
+            if(d.cx > d.ox) {
+                return "M" + d.sx + "," + d.sy + "L" + d.ox + "," + d.oy + " " + d.cx + "," + d.cy;
             } else {
-                return 1;
+                return "M" + d.ox + "," + d.oy + "L" + d.sx + "," + d.sy + " " + d.cx + "," + d.cy;
             }
         });
 
-        // date objects representing the first/last commit dates
-        var date0 = new Date(data[data.length - 1].commit.author.date);
-        var dateN = new Date(data[0].commit.author.date);
+        svg.append("text")
+        .attr("x", 0)
+        .attr("y", 0)
+        .attr("text-anchor", "middle")
+        .style("font-size", "28px")
+        .style("fill", "#838587")
+        .text("15/20");
 
-        // the number of days between the first and last commit
-        var days = Math.floor((dateN - date0) / 86400000) + 1;
+        svg.append("text")
+        .attr("x", 0)
+        .attr("y", "14px")
+        .attr("text-anchor", "middle")
+        .style("font-size", "10px")
+        .style("fill", "#838587")
+        .text("tasks completed");
 
-        // map authors and indexes
-        var uniqueAuthors = []; // map index -> author
-        var authorMap = {}; // map author -> index
-        data.forEach(function (datum) {
-            var name = datum.commit.author.name;
-            if (uniqueAuthors.indexOf(name) === -1) {
-                authorMap[name] = uniqueAuthors.length;
-                uniqueAuthors.push(name);
-            }
-        });
-
-        // build up the data to be passed to our d3 visualization
-        var formattedData = [];
-        formattedData.length = uniqueAuthors.length;
-        var i, j;
-        for (i = 0; i < formattedData.length; i++) {
-            formattedData[i] = [];
-            formattedData[i].length = days;
-            for (j = 0; j < formattedData[i].length; j++) {
-                formattedData[i][j] = {
-                    x: j,
-                    y: 0
-                };
-            }
-        }
-        data.forEach(function (datum) {
-            var date = new Date(datum.commit.author.date);
-            var curDay = Math.floor((date - date0) / 86400000);
-            formattedData[authorMap[datum.commit.author.name]][curDay].y += 1;
-            formattedData[0][curDay].date = humanReadableDate(date);
-        });
-
-        // add author names to data for the chart's key
-        for (i = 0; i < uniqueAuthors.length; i++) {
-            formattedData[i][0].user = uniqueAuthors[i];
-        }
-
-        return formattedData;
+        svg.append("text")
+        .attr("x", 0)
+        .attr("y", "-100px")
+        .attr("text-anchor", "middle")
+        .style("font-weight", "bold")
+        .style("font-size", "18px")
+        .style("fill", "#838587")
+        .text("Tasks");
     };
 
-    $scope.getCommitData = function () {
-        $http({
-            method: 'GET',
-            url:'https://api.github.com/repos/' +
-            $scope.user +
-            '/' +
-            $scope.repo +
-            '/commits'
-        }).
-        success(function (data) {
-            // attach this data to the scope
-            $scope.data = reformatGithubResponse(data);
+    $scope.visualize2 = function(data) {
+        var dataset = {
+            tasks: [9, 11, 15, 40],
+        };
 
-            // clear the error messages
-            $scope.error = '';
-        }).
-        error(function (data, status) {
-            if (status === 404) {
-                $scope.error = 'That repository does not exist';
+        var width = 300,
+        height = 300,
+        radius = Math.min(width, height) / 2;
+
+        var color = ["#f64747","#f5ab35","#70ceef", "#fff"];
+
+        var pie = d3.layout.pie()
+        .sort(null);
+
+        var piedata = pie(dataset.tasks);
+
+        var arc = d3.svg.arc()
+        .innerRadius(radius - 100)
+        .outerRadius(radius - 70);
+
+        var svg = d3.select("#viz2")
+        .attr("width", width)
+        .attr("height", height)
+        .append("g")
+        .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+        var path = svg.selectAll("path")
+        .data(piedata)
+        .enter().append("path")
+        .attr("fill", function(d, i) { return color[i]; })
+        .attr("d", arc);
+
+        svg.selectAll("text").data(piedata)
+        .enter()
+        .append("text")
+        .attr("text-anchor", "middle")
+        .attr("x", function(d) {
+            var a = d.startAngle + (d.endAngle - d.startAngle)/2 - Math.PI/2;
+            d.cx = Math.cos(a) * (radius - 75);
+            return d.x = Math.cos(a) * (radius - 20);
+        })
+        .attr("y", function(d) {
+            var a = d.startAngle + (d.endAngle - d.startAngle)/2 - Math.PI/2;
+            d.cy = Math.sin(a) * (radius - 75);
+            return d.y = Math.sin(a) * (radius - 20);
+        });
+
+        svg.append("defs").append("marker")
+        .attr("id", "circ")
+        .attr("markerWidth", 6)
+        .attr("markerHeight", 6)
+        .attr("refX", 3)
+        .attr("refY", 3)
+        .append("circle")
+        .attr("cx", 3)
+        .attr("cy", 3)
+        .attr("r", 3);
+
+        svg.selectAll("path.pointer").data(piedata).enter()
+        .append("path")
+        .attr("class", "pointer")
+        .style("fill", "none")
+        .style("stroke", "black")
+        .attr("marker-end", "url(#circ)")
+        .attr("d", function(d) {
+            if(d.cx > d.ox) {
+                return "M" + d.sx + "," + d.sy + "L" + d.ox + "," + d.oy + " " + d.cx + "," + d.cy;
             } else {
-                $scope.error = 'Error: ' + status;
+                return "M" + d.ox + "," + d.oy + "L" + d.sx + "," + d.sy + " " + d.cx + "," + d.cy;
             }
         });
+
+        svg.append("text")
+        .attr("x", 0)
+        .attr("y", 0)
+        .attr("text-anchor", "middle")
+        .style("font-size", "28px")
+        .style("fill", "#838587")
+        .text("35/75");
+
+        svg.append("text")
+        .attr("x", 0)
+        .attr("y", "14px")
+        .attr("text-anchor", "middle")
+        .style("font-size", "10px")
+        .style("fill", "#838587")
+        .text("hours budgeted");
+
+        svg.append("text")
+        .attr("x", 0)
+        .attr("y", "-100px")
+        .attr("text-anchor", "middle")
+        .style("font-weight", "bold")
+        .style("font-size", "18px")
+        .style("fill", "#838587")
+        .text("Time");
     };
 
     // get the commit data immediately
-    $scope.getCommitData();
-});
+    $scope.getTrelloData();
+}]);

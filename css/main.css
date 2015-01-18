@@ -98,3 +98,7 @@ hr {
     background: #FFF6E5;
     color: #4D4D4F;
 }
+
+.ui.image svg, .ui.image img {
+    display: inline-block;
+}

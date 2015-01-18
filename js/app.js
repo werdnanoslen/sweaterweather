@@ -33,10 +33,6 @@ angular.module('sweaterweather', [
         templateUrl: 'partials/dashboard.html',
         controller: 'DashboardCtrl'
     }).
-    when('/vis', {
-        templateUrl: 'partials/vis.html',
-        controller: 'AppCtrl'
-    }).
     otherwise({
         redirectTo: '/register/client/basic'
     });

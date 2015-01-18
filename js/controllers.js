@@ -8,7 +8,7 @@ angular.module('sweaterweather.controllers', [])
     1000);
 }])
 
-.controller('LoginCtrl', ['$scope', '$http', function ($scope, $http) {
+.controller('LoginCtrl', ['$scope', '$location', function ($scope, $location) {
     $scope.submit = function() {
         var credentials = {
             login: $scope.username,
@@ -16,6 +16,7 @@ angular.module('sweaterweather.controllers', [])
         };
         Hull.login(credentials).then(function (me) {
             console.log("You're logged in as ", me.email);
+            $location.path('/projects');
         }, function (error) {
             console.log("Ooops, something went wrong", error.message);
         });

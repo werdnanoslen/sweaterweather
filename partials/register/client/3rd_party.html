@@ -1,67 +1,60 @@
-<div class="ui top attached tabular menu">
-    <tab-item id="'tab1'" text="'Tab 1'" active="true"></tab-item>
-    <tab-item id="'tab2'" text="'Tab 2'"></tab-item>
-</div>
-
-<div class="ui bottom attached tab active segment tab1">
-    <div class="ui padded grid">
-        <div class="ui steps">
-            <a class="step">
-                <i class="user icon"></i>
-                <div class="content">
-                    <div class="title">Basic Info</div>
-                    <div class="description">Let's get to know you.</div>
+<div class="corset">
+    <div class="ui bottom attached tab active segment tab1">
+        <div class="ui padded grid">
+            <div class="ui steps">
+                <a class="step">
+                    <i class="user icon"></i>
+                    <div class="content">
+                        <div class="title">Basic Info</div>
+                        <div class="description">Let's get to know you.</div>
+                    </div>
+                </a>
+                <div class="step active">
+                    <i class="add circle icon"></i>
+                    <div class="content">
+                      <div class="title">3rd Party Setup</div>
+                      <div class="description">Connect essential services to your account.</div>
+                    </div>
                 </div>
-            </a>
-            <div class="step active">
-                <i class="add circle icon"></i>
-                <div class="content">
-                  <div class="title">3rd Party Setup</div>
-                  <div class="description">Connect essential services to your account.</div>
-                </div>
-            </div>
-            <div class="step disabled">
-                <i class="check square icon"></i>
-                <div class="content">
-                  <div class="title">Confirmation</div>
-                  <div class="description">Make sure you're all good to go!</div>
+                <div class="step disabled">
+                    <i class="check square icon"></i>
+                    <div class="content">
+                      <div class="title">Confirmation</div>
+                      <div class="description">Make sure you're all good to go!</div>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="ui sixteen wide column ng-class: {loading: isLoading}">
-            <h1 class="ui dividing header">3rd Party Setup</h1>
-            <div class="ui hidden divider"></div>
-            <div class="ui two column centered grid">
-                <div class="column">
-                    <img class="ui medium centered image" src="../../../images/venmo_logo_blue.png">
-                    <div class="ui hidden divider"></div>
-                    <p><strong>We use Venmo to process client payments for tasks, milestones, and projects.</strong> Client payments will be requested by the freelancer through Venmo upon completion of a task, and invoices can be produced on-demand. Head to <a href="https://venmo.com/" target="_blank">Venmo's website</a> to create an account if you don't have one, and fill out your account details to allow us to interact with your account.</p>
-                    <form class="ui form">
-                        <div class="field">
-                            <label>Email or Phone Number</label>
-                            <input type="text" name="name" placeholder="Identify your Venmo account">
+            <div class="ui sixteen wide column ng-class: {loading: isLoading}">
+                <h1 class="ui dividing header">3rd Party Setup</h1>
+                <div class="ui hidden divider"></div>
+                <div class="ui two column centered grid">
+                    <div class="column">
+                        <img class="ui medium centered image" src="images/venmo_logo_blue.png">
+                        <div class="ui hidden divider"></div>
+                        <p><strong>We use Venmo to process client payments for tasks, milestones, and projects.</strong> Client payments will be requested by the freelancer through Venmo upon completion of a task, and invoices can be produced on-demand. Head to <a href="https://venmo.com/" target="_blank">Venmo's website</a> to create an account if you don't have one, and fill out your account details to allow us to interact with your account.</p>
+                        <form class="ui form">
+                            <div class="field">
+                                <label>Email or Phone Number</label>
+                                <input type="text" name="name" placeholder="Identify your Venmo account">
+                            </div>
+                            <div class="field">
+                                <label>Password</label>
+                                <input type="password" name="password" placeholder="Your Venmo account's password">
+                            </div>
+                            <div class="ui submit button">
+                                Connect Venmo Account
+                            </div>
+                        </form>
+                        <div class="ui hidden divider"></div>
+                        <a href="#">Skip Venmo Connection</a>
+                        <div class="ui warning message">
+                            <div class="header">Listen up!</div>
+                            <p>Several features such as freelance payment and invoices will be unavailable until you connect your Venmo account. You can include or edit your information in your account options.</p>
+                            <a href="#">I understand</a>
                         </div>
-                        <div class="field">
-                            <label>Password</label>
-                            <input type="password" name="password" placeholder="Your Venmo account's password">
-                        </div>
-                        <div class="ui submit button">
-                            Connect Venmo Account
-                        </div>
-                    </form>
-                    <div class="ui hidden divider"></div>
-                    <a href="#">Skip Venmo Connection</a>
-                    <div class="ui warning message">
-                        <div class="header">Listen up!</div>
-                        <p>Several features such as freelance payment and invoices will be unavailable until you connect your Venmo account. You can include or edit your information in your account options.</p>
-                        <a href="#">I understand</a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-
-<div class="ui bottom attached tab segment tab2">
-    <p>This is the tab 2 content</p>
 </div>

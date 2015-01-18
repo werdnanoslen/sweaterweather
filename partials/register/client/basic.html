@@ -1,64 +1,60 @@
-<div class="ui top attached tabular menu">
-    <tab-item id="'tab1'" text="'Tab 1'" active="true"></tab-item>
-    <tab-item id="'tab2'" text="'Tab 2'"></tab-item>
-</div>
+<div class="corset">
+    <div class="ui bottom attached tab active segment tab1">
+        <div class="ui padded grid">
+            <div class="ui steps">
+                <div class="step active">
+                    <i class="user icon"></i>
+                    <div class="content">
+                        <div class="title">Basic Info</div>
+                        <div class="description">Let's get to know you.</div>
+                    </div>
+                </div>
+                <div class="step disabled">
+                    <i class="add circle icon"></i>
+                    <div class="content">
+                      <div class="title">3rd Party Setup</div>
+                      <div class="description">Connect essential services to your account.</div>
+                    </div>
+                </div>
+                <div class="step disabled">
+                    <i class="check square icon"></i>
+                    <div class="content">
+                      <div class="title">Confirmation</div>
+                      <div class="description">Make sure you're all good to go!</div>
+                    </div>
+                </div>
+            </div>
+            <div class="ui sixteen wide column ng-class: {loading: isLoading}">
+                <h1 class="ui dividing header">Basic Info
+                    <div class="sub header">Let's get to know you.</div>
+                </h1>
+                <form class="ui two column grid form error" ng-submit="submit()">
+                    <div class="column">
+                        <div class="field">
+                            <label>Name</label>
+                            <input type="text" name="name" placeholder="What's your name?" ng-model="name">
+                        </div>
+                        <div class="field">
+                            <label>Password</label>
+                            <input type="password" name="password" placeholder="Don't forget it!" ng-model="password">
 
-<div class="ui bottom attached tab active segment tab1">
-    <div class="ui padded grid">
-        <div class="ui steps">
-            <div class="step active">
-                <i class="user icon"></i>
-                <div class="content">
-                    <div class="title">Basic Info</div>
-                    <div class="description">Let's get to know you.</div>
-                </div>
-            </div>
-            <div class="step disabled">
-                <i class="add circle icon"></i>
-                <div class="content">
-                  <div class="title">3rd Party Setup</div>
-                  <div class="description">Connect essential services to your account.</div>
-                </div>
-            </div>
-            <div class="step disabled">
-                <i class="check square icon"></i>
-                <div class="content">
-                  <div class="title">Confirmation</div>
-                  <div class="description">Make sure you're all good to go!</div>
-                </div>
-            </div>
-        </div>
-        <div class="ui sixteen wide column ng-class: {loading: isLoading}">
-            <h1 class="ui dividing header">Basic Info
-                <div class="sub header">Let's get to know you.</div>
-            </h1>
-            <form class="ui two column grid form error" ng-submit="submit()">
-                <div class="column">
-                    <div class="field">
-                        <label>Name</label>
-                        <input type="text" name="name" placeholder="What's your name?" ng-model="name">
+                        </div>
+                        <div class="field">
+                            <label>Email Address</label>
+                            <input type="email" name="address" placeholder="You'll be using this to login." ng-model="email">
+                        </div>
+                        <button class="ui submit button" type="submit">
+                            Register
+                        </button>
                     </div>
-                    <div class="field">
-                        <label>Password</label>
-                        <input type="password" name="password" placeholder="Don't forget it!" ng-model="password">
-
+                    <div class="column">
+                        <img class="ui floated right image" src="http://placehold.it/400x200">
                     </div>
-                    <div class="field">
-                        <label>Email Address</label>
-                        <input type="email" name="address" placeholder="You'll be using this to login." ng-model="email">
-                    </div>
-                    <button class="ui submit button" type="submit">
-                        Register
-                    </button>
-                </div>
-                <div class="column">
-                    <img class="ui floated right image" src="http://placehold.it/400x200">
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
     </div>
-</div>
-
-<div class="ui bottom attached tab segment tab2">
-    <p>This is the tab 2 content</p>
+    <div class="ui bottom attached tab segment tab2">
+        <p>This is the tab 2 content</p>
+    </div>
 </div>

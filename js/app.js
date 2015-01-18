@@ -27,6 +27,10 @@ angular.module('sweaterweather', [
         templateUrl: 'partials/register/client/confirmation.html',
         controller: 'RegisterCtrl'
     }).
+    when('/dashboard', {
+        templateUrl: 'partials/dashboard.html',
+        controller: 'RegisterCtrl'
+    }).
     when('/vis', {
         templateUrl: 'partials/vis.html',
         controller: 'AppCtrl'

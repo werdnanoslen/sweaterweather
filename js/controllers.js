@@ -39,7 +39,27 @@ angular.module('sweaterweather.controllers', [])
 }])
 
 .controller('3rdPartyCtrl', ['$scope', '$http', '$location', function ($scope, $http, $location) {
-    console.log($location.search()['target']);
+    function getParameterByName(name) {
+        name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+        var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+        results = regex.exec(location.search);
+        return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+    }
+
+    var venmoToken = getParameterByName('access_token');
+    if (venmoToken != "") {
+        $http.get('https://api.venmo.com/v1/me?access_token=' + venmoToken)
+        .success(function(data, status, headers, config) {
+            // clear the error messages
+            $scope.error = '';
+            console.log(JSON.parse(data));
+
+            $location.path('/register/client/confirmation');
+        })
+        .error(function(data, status, headers, config) {
+            $scope.error = 'Error: ' + status;
+        });
+    }
 }])
 
 .controller('DashboardCtrl', ['$scope', '$http', function ($scope, $http) {

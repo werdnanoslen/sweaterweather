@@ -5,7 +5,7 @@ angular.module('sweaterweather', [
     'sweaterweather.directives'
 ])
 
-.config(['$routeProvider',function($routeProvider) {
+.config(['$routeProvider', function($routeProvider) {
     $routeProvider.
     when('/home', {
         templateUrl: 'partials/home.html',

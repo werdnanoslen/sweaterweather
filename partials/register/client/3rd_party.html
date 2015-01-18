@@ -32,19 +32,9 @@
                         <img class="ui medium centered image" src="images/venmo_logo_blue.png">
                         <div class="ui hidden divider"></div>
                         <p><strong>We use Venmo to process client payments for tasks, milestones, and projects.</strong> Client payments will be requested by the freelancer through Venmo upon completion of a task, and invoices can be produced on-demand. Head to <a href="https://venmo.com/" target="_blank">Venmo's website</a> to create an account if you don't have one, and fill out your account details to allow us to interact with your account.</p>
-                        <form class="ui form">
-                            <div class="field">
-                                <label>Email or Phone Number</label>
-                                <input type="text" name="name" placeholder="Identify your Venmo account">
-                            </div>
-                            <div class="field">
-                                <label>Password</label>
-                                <input type="password" name="password" placeholder="Your Venmo account's password">
-                            </div>
-                            <div class="ui submit button">
-                                Connect Venmo Account
-                            </div>
-                        </form>
+                        <a class="ui button" href="https://api.venmo.com/v1/oauth/authorize?client_id=2283&scope=make_payments%20access_profile">
+                            Connect Venmo Account
+                        </a>
                         <div class="ui hidden divider"></div>
                         <a href="#">Skip Venmo Connection</a>
                         <div class="ui warning message">

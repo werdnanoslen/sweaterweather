@@ -29,7 +29,7 @@ angular.module('sweaterweather', [
     when('/projects', {
         templateUrl: 'partials/project_listing.html',
     }).
-    when('/dashboard', {
+    when('/projects/:projectId', {
         templateUrl: 'partials/dashboard.html',
         controller: 'DashboardCtrl'
     }).
@@ -38,7 +38,7 @@ angular.module('sweaterweather', [
         controller: 'AppCtrl'
     }).
     otherwise({
-        redirectTo: '/home'
+        redirectTo: '/register/client/basic'
     });
 
     Hull.init({

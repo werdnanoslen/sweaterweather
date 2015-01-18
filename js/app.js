@@ -5,7 +5,7 @@ angular.module('sweaterweather', [
     'sweaterweather.directives'
 ])
 
-.config(['$routeProvider', function($routeProvider) {
+.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
     $routeProvider.
     when('/home', {
         templateUrl: 'partials/home.html',
@@ -40,6 +40,8 @@ angular.module('sweaterweather', [
     otherwise({
         redirectTo: '/home'
     });
+
+    $locationProvider.html5Mode(true);
 
     Hull.init({
         orgUrl: "https://56f8c7dd.hullapp.io",

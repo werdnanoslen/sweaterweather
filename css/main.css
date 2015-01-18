@@ -42,15 +42,48 @@ h1 {
 }
 #sidebar_btn {
     transition: all 300ms;
-    color: #77BF43;
+    color: #20C6A6;
     float: left;
 }
 #sidebar_btn:hover {
     transition: all 300ms;
-    color: #B3CF9F;
+    color: #25E0BC;
+}
+.ui.blue.button {
+    background-color: #20C6A6;
+    transition: all 300ms;
+}
+.ui.blue.button:hover {
+    background-color: #25E0BC;
+    transition: all 300ms;
+}
+.ui.blue.labels .label, .ui.blue.label {
+    background-color: #1ba8e5 !important;
+    border-color: #1ba8e5 !important;
+    color: #ffffff !important;
+}
+.ui.green.buttons .button, .ui.green.button {
+    background-color: #F5AB35;
+}
+.ui.green.statistics .statistic > .value,
+.ui.statistics .green.statistic > .value,
+.ui.green.statistic > .value {
+    color: #F5AB35;
+}
+.ui.blue.progress .bar {
+    background-color: #F5AB35;
+}
+.ui.red.buttons .button, .ui.red.button {
+    background-color: #20C6A6;
+}
+.ui.steps .step.active .title {
+    color: #20C6A6;
 }
 .ui.statistics > .statistic {
     margin: 0em 0.5em;
+}
+.invoice_unpaid {
+    font-weight: bold;
 }
 hr {
   border: 0;

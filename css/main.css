@@ -65,6 +65,9 @@ h1 {
 .ui.green.buttons .button, .ui.green.button {
     background-color: #F5AB35;
 }
+.ui.green.buttons:hover .button:hover, .ui.green.button:hover {
+    background-color: #F9C36D;
+}
 .ui.green.statistics .statistic > .value,
 .ui.statistics .green.statistic > .value,
 .ui.green.statistic > .value {

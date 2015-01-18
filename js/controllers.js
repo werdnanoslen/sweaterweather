@@ -38,9 +38,14 @@ angular.module('sweaterweather.controllers', [])
     };
 }])
 
-.controller('3rdPartyCtrl', ['$scope', '$http', function AppCtrl($scope, $http) {
+.controller('3rdPartyCtrl', ['$scope', '$http', function ($scope, $http) {
     var venmoKey = "Ny8tNB3UTMah6u7fM645MkPXPEuqmyUs";
     var venmoUrl = "https://api.venmo.com/v1/oauth/authorize?client_id=2283&scope=make_payments%20access_profile"
+}])
+
+.controller('DashboardCtrl', ['$scope', '$http', function ($scope, $http) {
+    $('.your.element').sidebar('behavior name', argumentOne, argumentTwo)
+    ;
 }])
 
 .controller('AppCtrl', function AppCtrl($scope, $http) {

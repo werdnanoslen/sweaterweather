@@ -28,6 +28,7 @@ angular.module('sweaterweather', [
     }).
     when('/dashboard', {
         templateUrl: 'partials/dashboard.html',
+        controller: 'DashboardCtrl'
     }).
     when('/vis', {
         templateUrl: 'partials/vis.html',

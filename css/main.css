@@ -85,6 +85,10 @@ h1 {
 .ui.steps .step.active .title {
     color: #20C6A6;
 }
+.ui.steps .step:first-child,
+.ui.steps .step:last-child {
+    border-radius: 0;
+}
 .ui.statistics > .statistic {
     margin: 0em 0.5em;
 }

@@ -98,96 +98,96 @@ angular.module('sweaterweather.controllers', [])
     };
 
     $scope.visualize1 = function(data) {
-        var dataset = {
-            tasks: [8, 3, 4, 5],
-        };
+        var w = 300,
+        h = 300,
+        r = 100,
+        inner = 60,
+        color = ["#f64747","#f5ab35","#70ceef", "#fff"];
 
-        var width = 300,
-        height = 300,
-        radius = Math.min(width, height) / 2;
+        data = [{"label":"Admin", "value":3},
+        {"label":"Design", "value":6},
+        {"label":"Coding", "value":6},
+        {"label":"", "value":5}];
 
-        var color = ["#f64747","#f5ab35","#70ceef", "#fff"];
-
-        var pie = d3.layout.pie()
-        .sort(null);
-
-        var piedata = pie(dataset.tasks);
-
-        var arc = d3.svg.arc()
-        .innerRadius(radius - 100)
-        .outerRadius(radius - 70);
-
-        var svg = d3.select("#viz1")
-        .attr("width", width)
-        .attr("height", height)
-        .append("g")
-        .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
-
-        var path = svg.selectAll("path")
-        .data(piedata)
-        .enter().append("path")
-        .attr("fill", function(d, i) { return color[i]; })
-        .attr("d", arc);
-
-        svg.selectAll("text").data(piedata)
-        .enter()
-        .append("text")
-        .attr("text-anchor", "middle")
-        .attr("x", function(d) {
-            var a = d.startAngle + (d.endAngle - d.startAngle)/2 - Math.PI/2;
-            d.cx = Math.cos(a) * (radius - 75);
-            return d.x = Math.cos(a) * (radius - 20);
-        })
-        .attr("y", function(d) {
-            var a = d.startAngle + (d.endAngle - d.startAngle)/2 - Math.PI/2;
-            d.cy = Math.sin(a) * (radius - 75);
-            return d.y = Math.sin(a) * (radius - 20);
+        var total = d3.sum(data, function(d) {
+            return d3.sum(d3.values(d));
         });
 
-        svg.append("defs").append("marker")
-        .attr("id", "circ")
-        .attr("markerWidth", 6)
-        .attr("markerHeight", 6)
-        .attr("refX", 3)
-        .attr("refY", 3)
-        .append("circle")
-        .attr("cx", 3)
-        .attr("cy", 3)
-        .attr("r", 3);
+        var vis = d3.select("#viz")
+        .append("svg:svg")
+        .data([data])
+        .attr("width", w)
+        .attr("height", h)
+        .append("svg:g")
+        .attr("transform", "translate(" + w / 2 + "," + h / 2 + ")");
 
-        svg.selectAll("path.pointer").data(piedata).enter()
-        .append("path")
-        .attr("class", "pointer")
-        .style("fill", "none")
-        .style("stroke", "black")
-        .attr("marker-end", "url(#circ)")
-        .attr("d", function(d) {
-            if(d.cx > d.ox) {
-                return "M" + d.sx + "," + d.sy + "L" + d.ox + "," + d.oy + " " + d.cx + "," + d.cy;
-            } else {
-                return "M" + d.ox + "," + d.oy + "L" + d.sx + "," + d.sy + " " + d.cx + "," + d.cy;
-            }
-        });
-
-        svg.append("text")
-        .attr("x", 0)
-        .attr("y", 0)
-        .attr("text-anchor", "middle")
-        .style("font-size", "28px")
-        .style("fill", "#838587")
-        .text("15/20");
-
-        svg.append("text")
-        .attr("x", 0)
-        .attr("y", "14px")
-        .attr("text-anchor", "middle")
+        var textTop = vis.append("text")
+        .attr("dy", ".35em")
+        .style("text-anchor", "middle")
+        .attr("class", "textTop")
+        .text( "15/" + total )
+        .attr('font-size', "28px")
+        .attr('fill', '#838587')
+        .attr("y", -10),
+        textBottom = vis.append("text")
+        .attr("dy", ".35em")
+        .style("text-anchor", "middle")
+        .attr("class", "textBottom")
         .style("font-size", "10px")
         .style("fill", "#838587")
-        .text("tasks completed");
+        .text("tasks completed")
+        .attr("y", 10);
 
-        svg.append("text")
+        var arc = d3.svg.arc()
+        .innerRadius(inner)
+        .outerRadius(r);
+
+        var arcOver = d3.svg.arc()
+        .innerRadius(inner + 5)
+        .outerRadius(r + 5);
+
+        var pie = d3.layout.pie()
+        .value(function(d) { return d.value; })
+        .sort(null);
+
+        var arcs = vis.selectAll("g.slice")
+        .data(pie)
+        .enter()
+        .append("svg:g")
+        .attr("class", "slice")
+        .on("mouseover", function(d) {
+            d3.select(this).select("path").transition()
+            .duration(200)
+            .attr("d", arcOver)
+            textTop.text( d3.select(this).datum().data.label )
+            .attr('font-size', "28px")
+            .attr('fill', '#838587')
+            .attr("y", -10);
+            textBottom.text(d3.select(this).datum().data.value + " tasks completed")
+            .style("font-size", "10px")
+            .style("fill", "#838587");
+        })
+        .on("mouseout", function(d) {
+            d3.select(this).select("path").transition()
+            .duration(100)
+            .attr("d", arc);
+
+            textTop.text( "15/" + total )
+            .attr('font-size', "28px")
+            .attr('fill', '#838587')
+            .attr("y", -10);
+            textBottom.text("tasks completed")
+            .style("font-size", "10px")
+            .style("fill", "#838587");
+        });
+
+        arcs.append("svg:path")
+        .attr("fill", function(d, i) { return color[i]; } )
+        .attr("d", arc);
+
+        arcs.append("text")
         .attr("x", 0)
-        .attr("y", "-100px")
+        .attr("y", "-120px")
         .attr("text-anchor", "middle")
         .style("font-weight", "bold")
         .style("font-size", "18px")
@@ -196,101 +196,121 @@ angular.module('sweaterweather.controllers', [])
     };
 
     $scope.visualize2 = function(data) {
-        var dataset = {
-            tasks: [9, 11, 15, 40],
-        };
+        var w = 300,
+        h = 300,
+        r = 100,
+        inner = 60,
+        color = ["#f64747","#f5ab35","#70ceef", "#fff"];
 
-        var width = 300,
-        height = 300,
-        radius = Math.min(width, height) / 2;
+        data = [{"label":"Admin", "value":5},
+        {"label":"Design", "value":15},
+        {"label":"Coding", "value":15},
+        {"label":"", "value":40}];
 
-        var color = ["#f64747","#f5ab35","#70ceef", "#fff"];
-
-        var pie = d3.layout.pie()
-        .sort(null);
-
-        var piedata = pie(dataset.tasks);
-
-        var arc = d3.svg.arc()
-        .innerRadius(radius - 100)
-        .outerRadius(radius - 70);
-
-        var svg = d3.select("#viz2")
-        .attr("width", width)
-        .attr("height", height)
-        .append("g")
-        .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
-
-        var path = svg.selectAll("path")
-        .data(piedata)
-        .enter().append("path")
-        .attr("fill", function(d, i) { return color[i]; })
-        .attr("d", arc);
-
-        svg.selectAll("text").data(piedata)
-        .enter()
-        .append("text")
-        .attr("text-anchor", "middle")
-        .attr("x", function(d) {
-            var a = d.startAngle + (d.endAngle - d.startAngle)/2 - Math.PI/2;
-            d.cx = Math.cos(a) * (radius - 75);
-            return d.x = Math.cos(a) * (radius - 20);
-        })
-        .attr("y", function(d) {
-            var a = d.startAngle + (d.endAngle - d.startAngle)/2 - Math.PI/2;
-            d.cy = Math.sin(a) * (radius - 75);
-            return d.y = Math.sin(a) * (radius - 20);
+        var total = d3.sum(data, function(d) {
+            return d3.sum(d3.values(d));
         });
 
-        svg.append("defs").append("marker")
-        .attr("id", "circ")
-        .attr("markerWidth", 6)
-        .attr("markerHeight", 6)
-        .attr("refX", 3)
-        .attr("refY", 3)
-        .append("circle")
-        .attr("cx", 3)
-        .attr("cy", 3)
-        .attr("r", 3);
+        var vis = d3.select("#viz")
+        .append("svg:svg")
+        .data([data])
+        .attr("width", w)
+        .attr("height", h)
+        .append("svg:g")
+        .attr("transform", "translate(" + w / 2 + "," + h / 2 + ")");
 
-        svg.selectAll("path.pointer").data(piedata).enter()
-        .append("path")
-        .attr("class", "pointer")
-        .style("fill", "none")
-        .style("stroke", "black")
-        .attr("marker-end", "url(#circ)")
-        .attr("d", function(d) {
-            if(d.cx > d.ox) {
-                return "M" + d.sx + "," + d.sy + "L" + d.ox + "," + d.oy + " " + d.cx + "," + d.cy;
-            } else {
-                return "M" + d.ox + "," + d.oy + "L" + d.sx + "," + d.sy + " " + d.cx + "," + d.cy;
-            }
-        });
-
-        svg.append("text")
-        .attr("x", 0)
-        .attr("y", 0)
-        .attr("text-anchor", "middle")
-        .style("font-size", "28px")
-        .style("fill", "#838587")
-        .text("35/75");
-
-        svg.append("text")
-        .attr("x", 0)
-        .attr("y", "14px")
-        .attr("text-anchor", "middle")
+        var textTop = vis.append("text")
+        .attr("dy", ".35em")
+        .style("text-anchor", "middle")
+        .attr("class", "textTop")
+        .text( "15/" + total )
+        .attr('font-size', "28px")
+        .attr('fill', '#838587')
+        .attr("y", -10),
+        textBottom = vis.append("text")
+        .attr("dy", ".35em")
+        .style("text-anchor", "middle")
+        .attr("class", "textBottom")
         .style("font-size", "10px")
         .style("fill", "#838587")
-        .text("hours budgeted");
+        .text("hours billed")
+        .attr("y", 10);
 
-        svg.append("text")
+        var arc = d3.svg.arc()
+        .innerRadius(inner)
+        .outerRadius(r);
+
+        var arcOver = d3.svg.arc()
+        .innerRadius(inner + 5)
+        .outerRadius(r + 5);
+
+        var pie = d3.layout.pie()
+        .value(function(d) { return d.value; })
+        .sort(null);
+
+        var arcs = vis.selectAll("g.slice")
+        .data(pie)
+        .enter()
+        .append("svg:g")
+        .attr("class", "slice")
+        .on("mouseover", function(d) {
+            d3.select(this).select("path").transition()
+            .duration(200)
+            .attr("d", arcOver)
+            textTop.text( d3.select(this).datum().data.label )
+            .attr('font-size', "28px")
+            .attr('fill', '#838587')
+            .attr("y", -10);
+            textBottom.text(d3.select(this).datum().data.value + " hours billed")
+            .style("font-size", "10px")
+            .style("fill", "#838587");
+        })
+        .on("mouseout", function(d) {
+            d3.select(this).select("path").transition()
+            .duration(100)
+            .attr("d", arc);
+
+            textTop.text( "15/" + total )
+            .attr('font-size', "28px")
+            .attr('fill', '#838587')
+            .attr("y", -10);
+            textBottom.text("hours billed")
+            .style("font-size", "10px")
+            .style("fill", "#838587");
+        });
+
+        arcs.append("svg:path")
+        .attr("fill", function(d, i) { return color[i]; } )
+        .attr("d", arc);
+
+        arcs.append("text")
         .attr("x", 0)
-        .attr("y", "-100px")
+        .attr("y", "-120px")
         .attr("text-anchor", "middle")
         .style("font-weight", "bold")
         .style("font-size", "18px")
         .style("fill", "#838587")
         .text("Time");
+
+        // var legend = d3.select("#viz").append("svg")
+        // .attr("class", "legend")
+        // .attr("width", r)
+        // .attr("height", r * 2)
+        // .selectAll("g")
+        // .data(data)
+        // .enter().append("g")
+        // .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
+        //
+        // legend.append("rect")
+        // .attr("width", 18)
+        // .attr("height", 18)
+        // .style("fill", function(d, i) { return color(i); });
+        //
+        // legend.append("text")
+        // .attr("x", 24)
+        // .attr("y", 9)
+        // .attr("dy", ".35em")
+        // .text(function(d) { return d.label; });
     };
 
     // get the commit data immediately

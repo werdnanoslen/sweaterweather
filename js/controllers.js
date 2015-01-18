@@ -72,6 +72,9 @@ angular.module('sweaterweather.controllers', [])
     $('#sidebar_btn').on('click', function() {
         $('.dashboard').sidebar('toggle');
     });
+    $('#budget_bar').progress({
+      percent: 76
+    });
 }])
 
 .controller('AppCtrl', function AppCtrl($scope, $http) {

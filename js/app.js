@@ -34,7 +34,7 @@ angular.module('sweaterweather', [
         controller: 'DashboardCtrl'
     }).
     otherwise({
-        redirectTo: '/register/client/basic'
+        redirectTo: '/login'
     });
 
     $('#sidebar_btn').hide();

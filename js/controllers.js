@@ -17,6 +17,7 @@ angular.module('sweaterweather.controllers', [])
         Hull.login(credentials).then(function (me) {
             console.log("You're logged in as ", me.email);
             $location.path('/projects');
+            $scope.$apply();
         }, function (error) {
             console.log("Ooops, something went wrong", error.message);
         });
@@ -33,6 +34,7 @@ angular.module('sweaterweather.controllers', [])
         Hull.signup(user).then(function(user) {
             console.log('Hello ' + user.name);
             $location.path('/register/client/3rd_party');
+            $scope.$apply();
         }, function(error) {
             console.log(error.message);
         });
@@ -62,6 +64,7 @@ angular.module('sweaterweather.controllers', [])
             console.log(JSON.parse(data));
 
             $location.path('/register/client/confirmation');
+            $scope.$apply();
         })
         .error(function(data, status, headers, config) {
             $scope.error = 'Error: ' + status;

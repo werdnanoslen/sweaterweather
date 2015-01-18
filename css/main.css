@@ -79,6 +79,9 @@ h1 {
 .ui.red.buttons .button, .ui.red.button {
     background-color: #20C6A6;
 }
+.ui.red.buttons .button:hover, .ui.red.button:hover {
+    background-color: #25E0BC;
+}
 .ui.steps .step.active .title {
     color: #20C6A6;
 }

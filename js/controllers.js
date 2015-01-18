@@ -44,7 +44,7 @@ angular.module('sweaterweather.controllers', [])
             $("#venmo_alert").transition('fade');
         }
     });
-    
+
     function getParameterByName(name) {
         name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
         var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),

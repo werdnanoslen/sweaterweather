@@ -43,8 +43,9 @@ angular.module('sweaterweather.controllers', [])
 }])
 
 .controller('DashboardCtrl', ['$scope', '$http', function ($scope, $http) {
-    $('.your.element').sidebar('behavior name', argumentOne, argumentTwo)
-    ;
+    $('#sidebar_btn').on('click', function() {
+        $('.dashboard').sidebar('toggle');
+    });
 }])
 
 .controller('AppCtrl', function AppCtrl($scope, $http) {

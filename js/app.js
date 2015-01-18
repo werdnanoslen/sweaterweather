@@ -26,6 +26,9 @@ angular.module('sweaterweather', [
     when('/register/client/confirmation', {
         templateUrl: 'partials/register/client/confirmation.html',
     }).
+    when('/projects', {
+        templateUrl: 'partials/project_listing.html',
+    }).
     when('/dashboard', {
         templateUrl: 'partials/dashboard.html',
         controller: 'DashboardCtrl'

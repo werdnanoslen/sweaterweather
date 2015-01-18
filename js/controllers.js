@@ -39,6 +39,12 @@ angular.module('sweaterweather.controllers', [])
 }])
 
 .controller('3rdPartyCtrl', ['$scope', '$http', '$location', function ($scope, $http, $location) {
+    $("#venmo_button").click(function(){
+        if ($("#venmo_alert").hasClass('hidden')) {
+            $("#venmo_alert").transition('fade');
+        }
+    });
+    
     function getParameterByName(name) {
         name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
         var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),

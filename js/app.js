@@ -37,8 +37,6 @@ angular.module('sweaterweather', [
         redirectTo: '/login'
     });
 
-    $('#sidebar_btn').hide();
-
     Hull.init({
         orgUrl: "https://56f8c7dd.hullapp.io",
         appId: "54b9cdba1c94bc6a43000975"

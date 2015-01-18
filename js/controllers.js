@@ -1,6 +1,7 @@
 angular.module('sweaterweather.controllers', [])
 
 .controller('HomeCtrl', ['$scope', '$timeout', '$http', function ($scope, $timeout, $http) {
+    $('#sidebar_btn').hide();
     $scope.isLoading = true;
     $timeout(function () {
         $scope.isLoading = false;
@@ -9,6 +10,7 @@ angular.module('sweaterweather.controllers', [])
 }])
 
 .controller('LoginCtrl', ['$scope', '$location', function ($scope, $location) {
+    $('#sidebar_btn').hide();
     $scope.submit = function() {
         var credentials = {
             login: $scope.username,
@@ -25,6 +27,7 @@ angular.module('sweaterweather.controllers', [])
 }])
 
 .controller('RegisterCtrl', ['$scope', '$http', '$location', function ($scope, $http, $location) {
+    $('#sidebar_btn').hide();
     $scope.submit = function() {
         var user = {
             name: $scope.name,
@@ -42,6 +45,7 @@ angular.module('sweaterweather.controllers', [])
 }])
 
 .controller('3rdPartyCtrl', ['$scope', '$http', '$location', function ($scope, $http, $location) {
+    $('#sidebar_btn').hide();
     $("#venmo_button").click(function(){
         if ($("#venmo_alert").hasClass('hidden')) {
             $("#venmo_alert").transition('fade');
@@ -284,6 +288,9 @@ angular.module('sweaterweather.controllers', [])
             textBottom.text("hours billed")
             .style("font-size", "10px")
             .style("fill", "#838587");
+        })
+        .on("click", function(d) {
+            $('.ui.large.modal').modal('show');
         });
 
         arcs.append("svg:path")

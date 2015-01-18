@@ -101,7 +101,9 @@ hr {
     background: #FFF6E5;
     color: #4D4D4F;
 }
-
+.modal .ui.items {
+    margin: 1.5em 2em;
+}
 .ui.image svg, .ui.image img {
     display: inline-block;
 }

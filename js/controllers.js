@@ -81,6 +81,10 @@ angular.module('sweaterweather.controllers', [])
       percent: 76
     });
 
+    $('#demo_btn').on('click', function() {
+        $('.ui.large.modal').modal('show');
+    });
+
     $scope.getTrelloData = function () {
         Trello.authorize({
             success: function() {
